@@ -25,7 +25,7 @@ function App() {
                 </a>
                 <button>Login 🦞</button>
                 <p>
-                    🦞 You've been staring at this spinning logo for {Math.floor(Math.random() * 60)} seconds 🦞
+                    🦞  🦞  🦞  🦞  🦞
                 </p>
                 <p>
                     🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞
