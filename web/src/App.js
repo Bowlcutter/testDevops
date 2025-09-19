@@ -6,15 +6,6 @@ function App() {
         <div className="App">
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞
-                </p>
-                <p>
-                    🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞
-                </p>
-                <p>
-                    🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞
-                </p>
                 <a
                     className="App-link"
                     href="https://reactjs.org"
@@ -23,12 +14,12 @@ function App() {
                 >
                     🦞Learn React🦞
                 </a>
-                <button>Login 🦞</button>
+                <button>Login</button>
                 <p>
-                    🦞 You've been staring at this spinning logo for {Math.floor(Math.random() * 60)} seconds 🦞
+                    Help me make it through the night
                 </p>
                 <p>
-                    🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞🦞
+                    🦞 You've been staring at this spinning logo for {Math.floor(Math.random() * 60)} seconds 🦞
                 </p>
             </header>
         </div>
