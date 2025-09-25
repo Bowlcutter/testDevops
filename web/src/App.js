@@ -1,27 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Painters from "./pages/Painters";
+import About from "./pages/About";
 
 function App() {
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    🦞Learn React🦞
-                </a>
-                <button>Login</button>
-                <p>
-                    Help me make it through the night
-                </p>
-                <p>
-                    🦞 You've been staring at this spinning logo for {Math.floor(Math.random() * 60)} seconds 🦞
-                </p>
-            </header>
+        <div>
+            <nav>
+                <Link to="/">Home</Link> |{" "}
+                <Link to="/painters">Painters</Link> |{" "}
+                <Link to="/about">About</Link>
+            </nav>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/painters" element={<Painters />} />
+                <Route path="/about" element={<About />} />
+                <Route path="*" element={<h1>404</h1>} />
+            </Routes>
         </div>
     );
 }
