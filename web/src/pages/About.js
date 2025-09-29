@@ -4,8 +4,8 @@ function About() {
     return (
         <div style={{padding: '20px'}}>
             <h1>About Page</h1>
-            <p>This is the about page - it's working!</p>
-            <p>You successfully navigated to a different route.</p>
+            <p>Painters sell their stuff here yippeee.</p>
+            <p>Make an offer on an item(s), if it isn't too low then you have a deal.</p>
         </div>
     );
 }

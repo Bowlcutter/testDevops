@@ -2,9 +2,9 @@ import { makeAutoObservable } from "mobx";
 
 class PainterStore {
     painters = [
-        { id: 1, name: "Christian", style: "Abstract" },
-        { id: 2, name: "Bente", style: "Realism" },
-        { id: 3, name: "Donnie", style: "Cubism" },
+        { id: 1, name: "Bo", style: "Abstract" },
+        { id: 2, name: "Christian", style: "Realism" },
+        { id: 3, name: "Daniel", style: "Anime" },
     ];
 
     constructor() {
