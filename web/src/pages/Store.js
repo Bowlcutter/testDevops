@@ -68,7 +68,7 @@ const Store = observer(() => {
                                                 {a.image && (
                                                     <CardMedia
                                                         component="img"
-                                                        height="420"
+                                                        height="400"
                                                         image={a.image}
                                                         alt={a.title}
                                                         sx={{ objectFit: "cover", mb: 1 }}
