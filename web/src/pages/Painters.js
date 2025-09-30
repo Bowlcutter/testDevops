@@ -7,10 +7,13 @@ import { Container, Typography, Grid } from "@mui/material";
 
 const Painters = observer(() => {
     return (
-        <Container>
+        <Container style={{padding: '40px'}}>
             <Typography variant="h4" gutterBottom>
                 Painters
             </Typography>
+            <h2>
+                (Please no touching! Feature requires login... (in the works))
+            </h2>
 
             <PainterForm onAdd={(name, style) => painterStore.addPainter(name, style)} />
 

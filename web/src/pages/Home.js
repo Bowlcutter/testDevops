@@ -2,9 +2,9 @@ function Home() {
 
 
     return (
-        <div style={{padding: '20px'}}>
+        <div style={{padding: '40px'}}>
             <h1>Home Page</h1>
-            <p>Poggers</p>
+            <p>Hello :)</p>
         </div>
     );
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { painterStore } from "../stores/PainterStore";
 import { auxStore } from "../stores/AuxStore";
+import { cartStore } from "../stores/CartStore";
 import {
     Container,
     Typography,
@@ -10,7 +11,8 @@ import {
     CardContent,
     Divider,
     TextField,
-    Button
+    Button,
+    Box
 } from "@mui/material";
 
 const Store = observer(() => {
@@ -23,15 +25,39 @@ const Store = observer(() => {
         const artwork = painter.artworks.find(a => a.id === artworkId);
         const bidValue = parseInt(bids[artworkId] || 0, 10);
 
-        if (artwork && bidValue >= artwork.secretPrice) {
+        if (!artwork) return;
+
+        if (bidValue < 1) {
+            alert("⚠️ Minimum bid is 1 kr.");
+            return;
+        }
+
+        if (bidValue >= artwork.secretPrice) {
             alert(`✅ Congrats! Your bid of ${bidValue}kr. was accepted for "${artwork.title}".`);
+            cartStore.addItem({
+                id: artwork.id,
+                name: artwork.title,
+                price: bidValue,
+                type: "painting"
+            });
         } else {
             alert(`❌ Sorry, your bid of ${bidValue}kr. was too low for "${artwork.title}".`);
         }
     };
 
+    /*
+    const handleAddAux = (item) => {
+        cartStore.addItem({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            type: "aux"
+        });
+        alert(`🛒 "${item.name}" added to cart.`);
+    };*/
+
     return (
-        <Container>
+        <Container style={{padding: '40px'}}>
             <Typography variant="h4" gutterBottom>
                 Art Store
             </Typography>
@@ -51,40 +77,32 @@ const Store = observer(() => {
                                             <Card variant="outlined" sx={{ p: 2 }}>
                                                 <CardContent>
                                                     <Typography variant="h6">{a.title}</Typography>
-
-                                                    <Grid container spacing={1} alignItems="center" sx={{ mt: 1 }}>
-                                                        <Grid item xs={7}>
-                                                            <TextField
-                                                                label="Your Bid (kr.)"
-                                                                type="number"
-                                                                size="small"
-                                                                inputProps={{ min: 1 }}   // minimum bid = 1
-                                                                value={bids[a.id] || ""}
-                                                                onChange={(e) =>
-                                                                    setBids({
-                                                                        ...bids,
-                                                                        [a.id]: e.target.value
-                                                                    })
-                                                                }
-                                                                fullWidth
-                                                            />
-                                                        </Grid>
-                                                        <Grid item xs={5}>
-                                                            <Button
-                                                                fullWidth
-                                                                variant="contained"
-                                                                onClick={() => handleBid(p.id, a.id)}
-                                                                disabled={!bids[a.id] || bids[a.id] < 1} // disable if invalid
-                                                            >
-                                                                Place Bid
-                                                            </Button>
-                                                        </Grid>
-                                                    </Grid>
+                                                    <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
+                                                        <TextField
+                                                            label="Your Bid (kr)"
+                                                            type="number"
+                                                            size="small"
+                                                            value={bids[a.id] || ""}
+                                                            onChange={(e) =>
+                                                                setBids({
+                                                                    ...bids,
+                                                                    [a.id]: e.target.value
+                                                                })
+                                                            }
+                                                            inputProps={{ min: 1 }}
+                                                            sx={{ flex: 1 }}
+                                                        />
+                                                        <Button
+                                                            variant="contained"
+                                                            onClick={() => handleBid(p.id, a.id)}
+                                                        >
+                                                            Place Bid
+                                                        </Button>
+                                                    </Box>
                                                 </CardContent>
                                             </Card>
                                         </Grid>
                                     ))}
-
                                 </Grid>
                             </CardContent>
                         </Card>
@@ -101,9 +119,23 @@ const Store = observer(() => {
                         <Card variant="outlined" sx={{ p: 2 }}>
                             <CardContent>
                                 <Typography variant="h6">{i.name}</Typography>
-                                <Typography variant="body2">
+                                <Typography variant="body2" gutterBottom>
                                     Price: {i.price} kr.
                                 </Typography>
+                                <Button
+                                    variant="contained"
+                                    onClick={() =>
+                                        cartStore.addItem({
+                                            id: i.id,
+                                            name: i.name,
+                                            price: i.price,
+                                            type: "aux"
+                                        })
+                                    }
+                                >
+                                    Add to Cart
+                                </Button>
+
                             </CardContent>
                         </Card>
                     </Grid>
