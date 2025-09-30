@@ -12,7 +12,8 @@ import {
     Divider,
     TextField,
     Button,
-    Box
+    Box,
+    CardMedia
 } from "@mui/material";
 
 const Store = observer(() => {
@@ -45,19 +46,8 @@ const Store = observer(() => {
         }
     };
 
-    /*
-    const handleAddAux = (item) => {
-        cartStore.addItem({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            type: "aux"
-        });
-        alert(`🛒 "${item.name}" added to cart.`);
-    };*/
-
     return (
-        <Container style={{padding: '40px'}}>
+        <Container style={{ padding: "40px" }}>
             <Typography variant="h4" gutterBottom>
                 Art Store
             </Typography>
@@ -75,6 +65,15 @@ const Store = observer(() => {
                                     {p.artworks.map((a) => (
                                         <Grid item xs={12} sm={6} md={4} key={a.id}>
                                             <Card variant="outlined" sx={{ p: 2 }}>
+                                                {a.image && (
+                                                    <CardMedia
+                                                        component="img"
+                                                        height="420"
+                                                        image={a.image}
+                                                        alt={a.title}
+                                                        sx={{ objectFit: "cover", mb: 1 }}
+                                                    />
+                                                )}
                                                 <CardContent>
                                                     <Typography variant="h6">{a.title}</Typography>
                                                     <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
@@ -117,6 +116,15 @@ const Store = observer(() => {
                 {auxStore.items.map((i) => (
                     <Grid item xs={12} sm={6} md={4} key={i.id}>
                         <Card variant="outlined" sx={{ p: 2 }}>
+                            {i.image && (
+                                <CardMedia
+                                    component="img"
+                                    height="140"
+                                    image={i.image}
+                                    alt={i.name}
+                                    sx={{ objectFit: "contain", mb: 1 }}
+                                />
+                            )}
                             <CardContent>
                                 <Typography variant="h6">{i.name}</Typography>
                                 <Typography variant="body2" gutterBottom>
@@ -135,7 +143,6 @@ const Store = observer(() => {
                                 >
                                     Add to Cart
                                 </Button>
-
                             </CardContent>
                         </Card>
                     </Grid>
