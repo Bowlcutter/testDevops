@@ -32,10 +32,11 @@ const Cart = observer(() => {
                                     />
                                     <Button
                                         color="error"
-                                        onClick={() => cartStore.removeItem(item.id)}
+                                        onClick={() => cartStore.removeItem(item.id, item.type)}
                                     >
                                         Remove
                                     </Button>
+
                                 </ListItem>
                                 <Divider />
                             </React.Fragment>
