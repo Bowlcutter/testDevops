@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
-import { painterStore } from "../stores/PainterStore";
-import { auxStore } from "../stores/AuxStore";
-import { cartStore } from "../stores/CartStore";
+import { painterStore } from "../storages/PainterStore";
+import { auxStore } from "../storages/AuxStore";
+import { cartStore } from "../storages/CartStore";
+import BackendStatus from "../components/BackendStatus";
 import {
     Container,
     Typography,
@@ -13,7 +14,8 @@ import {
     TextField,
     Button,
     Box,
-    CardMedia
+    CardMedia,
+    Alert
 } from "@mui/material";
 
 const Store = observer(() => {
@@ -48,9 +50,18 @@ const Store = observer(() => {
 
     return (
         <Container style={{ padding: "40px" }}>
-            <Typography variant="h4" gutterBottom>
-                Art Store
-            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                <Typography variant="h4">
+                    Art Store
+                </Typography>
+                <BackendStatus />
+            </Box>
+
+            {!painterStore.useBackend && (
+                <Alert severity="info" sx={{ mb: 3 }}>
+                    Currently showing static demo data. Toggle "Use Backend" above to fetch from database.
+                </Alert>
+            )}
 
             <Grid container spacing={3}>
                 {painterStore.painters.map((p) => (
@@ -62,46 +73,54 @@ const Store = observer(() => {
                                 <Divider sx={{ my: 2 }} />
 
                                 <Grid container spacing={2}>
-                                    {p.artworks.map((a) => (
-                                        <Grid item xs={12} sm={6} md={4} key={a.id}>
-                                            <Card variant="outlined" sx={{ p: 2 }}>
-                                                {a.image && (
-                                                    <CardMedia
-                                                        component="img"
-                                                        height="400"
-                                                        image={a.image}
-                                                        alt={a.title}
-                                                        sx={{ objectFit: "cover", mb: 1 }}
-                                                    />
-                                                )}
-                                                <CardContent>
-                                                    <Typography variant="h6">{a.title}</Typography>
-                                                    <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
-                                                        <TextField
-                                                            label="Your Bid (kr)"
-                                                            type="number"
-                                                            size="small"
-                                                            value={bids[a.id] || ""}
-                                                            onChange={(e) =>
-                                                                setBids({
-                                                                    ...bids,
-                                                                    [a.id]: e.target.value
-                                                                })
-                                                            }
-                                                            inputProps={{ min: 1 }}
-                                                            sx={{ flex: 1 }}
+                                    {p.artworks && p.artworks.length > 0 ? (
+                                        p.artworks.map((a) => (
+                                            <Grid item xs={12} sm={6} md={4} key={a.id}>
+                                                <Card variant="outlined" sx={{ p: 2 }}>
+                                                    {(a.image || a.imageUrl) && (
+                                                        <CardMedia
+                                                            component="img"
+                                                            height="400"
+                                                            image={a.image || a.imageUrl}
+                                                            alt={a.title}
+                                                            sx={{ objectFit: "cover", mb: 1 }}
                                                         />
-                                                        <Button
-                                                            variant="contained"
-                                                            onClick={() => handleBid(p.id, a.id)}
-                                                        >
-                                                            Place Bid
-                                                        </Button>
-                                                    </Box>
-                                                </CardContent>
-                                            </Card>
+                                                    )}
+                                                    <CardContent>
+                                                        <Typography variant="h6">{a.title}</Typography>
+                                                        <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
+                                                            <TextField
+                                                                label="Your Bid (kr)"
+                                                                type="number"
+                                                                size="small"
+                                                                value={bids[a.id] || ""}
+                                                                onChange={(e) =>
+                                                                    setBids({
+                                                                        ...bids,
+                                                                        [a.id]: e.target.value
+                                                                    })
+                                                                }
+                                                                inputProps={{ min: 1 }}
+                                                                sx={{ flex: 1 }}
+                                                            />
+                                                            <Button
+                                                                variant="contained"
+                                                                onClick={() => handleBid(p.id, a.id)}
+                                                            >
+                                                                Place Bid
+                                                            </Button>
+                                                        </Box>
+                                                    </CardContent>
+                                                </Card>
+                                            </Grid>
+                                        ))
+                                    ) : (
+                                        <Grid item xs={12}>
+                                            <Typography color="text.secondary" align="center">
+                                                No artworks available for this painter yet.
+                                            </Typography>
                                         </Grid>
-                                    ))}
+                                    )}
                                 </Grid>
                             </CardContent>
                         </Card>

@@ -1,19 +1,32 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { painterStore } from "../stores/PainterStore";
+import { painterStore } from "../storages/PainterStore";
 import PainterCard from "../components/PainterCard";
 import PainterForm from "../components/PainterForm";
-import { Container, Typography, Grid } from "@mui/material";
+import BackendStatus from "../components/BackendStatus";
+import { Container, Typography, Grid, Box, Alert } from "@mui/material";
 
 const Painters = observer(() => {
     return (
         <Container style={{padding: '40px'}}>
-            <Typography variant="h4" gutterBottom>
-                Painters
-            </Typography>
-            <h2>
-                (Please no touching! Feature requires login... (in the works))
-            </h2>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                <Typography variant="h4">
+                    Painters
+                </Typography>
+                <BackendStatus />
+            </Box>
+
+            {!painterStore.useBackend && (
+                <Alert severity="info" sx={{ mb: 2 }}>
+                    Currently showing static demo data. Toggle "Use Backend" above to fetch from database.
+                </Alert>
+            )}
+
+            {painterStore.useBackend && (
+                <Alert severity="warning" sx={{ mb: 2 }}>
+                    (Please no touching! Feature requires login... (in the works))
+                </Alert>
+            )}
 
             <PainterForm onAdd={(name, style) => painterStore.addPainter(name, style)} />
 

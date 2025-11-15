@@ -1,11 +1,12 @@
 import { Routes, Route, Link } from 'react-router-dom';
 import { observer } from "mobx-react-lite";
-import { cartStore } from "./stores/CartStore";
+import { cartStore } from "./storages/CartStore";
 import Home from './pages/Home';
 import About from './pages/About';
 import Painters from './pages/Painters';
 import Store from "./pages/Store";
 import Cart from "./pages/Cart";
+import Users from "./pages/Users";
 
 import {
     AppBar,
@@ -32,6 +33,9 @@ const App = observer(() => {
                         <Link to="/store" style={{ color: "inherit", textDecoration: "none", marginRight: "15px" }}>
                             Store
                         </Link>
+                        <Link to="/users" style={{ color: "inherit", textDecoration: "none", marginRight: "15px" }}>
+                            Users
+                        </Link>
                         <Link to="/about" style={{ color: "inherit", textDecoration: "none", marginRight: "15px" }}>
                             About
                         </Link>
@@ -50,6 +54,7 @@ const App = observer(() => {
                     <Route path="/" element={<Home />} />
                     <Route path="/painters" element={<Painters />} />
                     <Route path="/store" element={<Store />} />
+                    <Route path="/users" element={<Users />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="*" element={<h1>404</h1>} />

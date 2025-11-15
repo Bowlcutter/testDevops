@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { cartStore } from "../stores/CartStore";
+import { cartStore } from "../storages/CartStore";
 import {
     Container,
     Typography,

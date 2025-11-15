@@ -3,14 +3,12 @@ package test.Devops;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-// keeping this just in case
-
 @SpringBootTest
-class AppTest {
+class ApplicationTests {
 
     @Test
     void contextLoads() {
-        // Test passes
+        // ez test
     }
 
 }
