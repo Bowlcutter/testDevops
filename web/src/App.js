@@ -7,6 +7,7 @@ import Painters from './pages/Painters';
 import Store from "./pages/Store";
 import Cart from "./pages/Cart";
 import Users from "./pages/Users";
+import Orders from "./pages/Orders";
 
 import {
     AppBar,
@@ -33,6 +34,9 @@ const App = observer(() => {
                         <Link to="/store" style={{ color: "inherit", textDecoration: "none", marginRight: "15px" }}>
                             Store
                         </Link>
+                        <Link to="/orders" style={{ color: "inherit", textDecoration: "none", marginRight: "15px" }}>
+                            Orders
+                        </Link>
                         <Link to="/users" style={{ color: "inherit", textDecoration: "none", marginRight: "15px" }}>
                             Users
                         </Link>
@@ -54,6 +58,7 @@ const App = observer(() => {
                     <Route path="/" element={<Home />} />
                     <Route path="/painters" element={<Painters />} />
                     <Route path="/store" element={<Store />} />
+                    <Route path="/orders" element={<Orders />} />
                     <Route path="/users" element={<Users />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/cart" element={<Cart />} />

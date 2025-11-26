@@ -79,7 +79,7 @@ jobs:
     
     - name: Run Tests
       working-directory: ./web
-      run: npm test -- --passWithNoTests
+      run: npm test -- --watchAll=false --coverage
     
     - name: Build Frontend
       working-directory: ./web
