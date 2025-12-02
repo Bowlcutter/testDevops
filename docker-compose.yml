@@ -21,8 +21,7 @@ services:
     networks:
       - testdevops-network
 
-  # Spring Boot Backend (Optional - for full Docker deployment)
-  # Uncomment this section if you want to run backend in Docker too
+  # Spring Boot Backend (full Docker deployment)
   # backend:
   #   build:
   #     context: .
