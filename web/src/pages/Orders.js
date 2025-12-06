@@ -20,6 +20,7 @@ import {
     AccordionDetails
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Orders = observer(() => {
     const [emailFilter, setEmailFilter] = useState("");
@@ -33,6 +34,16 @@ const Orders = observer(() => {
             orderStore.fetchOrdersByEmail(emailFilter);
         } else {
             orderStore.fetchAllOrders();
+        }
+    };
+
+    const handleDeleteOrder = async (orderId) => {
+        if (window.confirm('Are you sure you want to delete this order? This action cannot be undone.')) {
+            try {
+                await orderStore.deleteOrder(orderId);
+            } catch (error) {
+                console.error('Failed to delete order:', error);
+            }
         }
     };
 
@@ -144,6 +155,17 @@ const Orders = observer(() => {
                                     <Typography variant="h6" align="right">
                                         Total: {order.total} kr.
                                     </Typography>
+
+                                    <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
+                                        <Button 
+                                            variant="outlined" 
+                                            color="error"
+                                            startIcon={<DeleteIcon />}
+                                            onClick={() => handleDeleteOrder(order.id)}
+                                        >
+                                            Delete Order
+                                        </Button>
+                                    </Box>
                                 </Box>
                             </AccordionDetails>
                         </Accordion>

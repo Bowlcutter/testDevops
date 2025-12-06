@@ -46,7 +46,7 @@ describe('CartStore', () => {
         
         const painting = { id: 1, name: 'Mona Lisa', price: 5000, type: 'painting' };
         cartStore.addItem(painting);
-        cartStore.addItem(painting); // Try to add again
+        cartStore.addItem(painting);
         
         expect(cartStore.items.length).toBe(1);
         expect(cartStore.itemCount).toBe(1);
@@ -78,8 +78,7 @@ describe('CartStore', () => {
         cartStore.addItem({ id: 1, name: 'Frame', price: 50, type: 'aux' });
         cartStore.addItem({ id: 1, name: 'Frame', price: 50, type: 'aux' });
         cartStore.addItem({ id: 2, name: 'Painting', price: 1000, type: 'painting' });
-        
-        // 2 frames (50*2) + 1 painting (1000) = 1100
+
         expect(cartStore.total).toBe(1100);
     });
 });

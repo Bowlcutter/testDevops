@@ -1,4 +1,4 @@
-# Simplified Dockerfile - expects JAR to be pre-built by CI/CD
+# Dockerfile - expects JAR to be built by CI/CD
 FROM eclipse-temurin:17-jre-alpine
 
 # Set working directory

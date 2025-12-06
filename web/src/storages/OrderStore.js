@@ -1,11 +1,10 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { orderApi } from "../services/orderApi";
+import { orderAPI } from "../services/api";
 
 class OrderStore {
     orders = [];
     loading = false;
     error = null;
-    currentCustomerEmail = ""; // In real app, would come from auth
 
     constructor() {
         makeAutoObservable(this);
@@ -15,7 +14,7 @@ class OrderStore {
         this.loading = true;
         this.error = null;
         try {
-            const orders = await orderApi.getAllOrders();
+            const orders = await orderAPI.getAll();
             runInAction(() => {
                 this.orders = orders;
                 this.loading = false;
@@ -32,7 +31,7 @@ class OrderStore {
         this.loading = true;
         this.error = null;
         try {
-            const orders = await orderApi.getOrdersByEmail(email);
+            const orders = await orderAPI.getByEmail(email);
             runInAction(() => {
                 this.orders = orders;
                 this.loading = false;
@@ -62,13 +61,30 @@ class OrderStore {
                 }))
             };
 
-            const newOrder = await orderApi.createOrder(orderData);
+            const newOrder = await orderAPI.create(orderData);
             runInAction(() => {
                 this.orders.unshift(newOrder);
-                this.currentCustomerEmail = customerEmail;
                 this.loading = false;
             });
             return newOrder;
+        } catch (error) {
+            runInAction(() => {
+                this.error = error.message;
+                this.loading = false;
+            });
+            throw error;
+        }
+    }
+
+    async deleteOrder(orderId) {
+        this.loading = true;
+        this.error = null;
+        try {
+            await orderAPI.delete(orderId);
+            runInAction(() => {
+                this.orders = this.orders.filter(order => order.id !== orderId);
+                this.loading = false;
+            });
         } catch (error) {
             runInAction(() => {
                 this.error = error.message;

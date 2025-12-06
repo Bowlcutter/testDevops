@@ -28,7 +28,7 @@ const fetchAPI = async (url, options = {}) => {
     }
 };
 
-// Painter API
+// painter API
 export const painterAPI = {
     getAll: () => fetchAPI(`${API_BASE_URL}/painters`),
     
@@ -51,7 +51,7 @@ export const painterAPI = {
     }),
 };
 
-// User API
+// user API
 export const userAPI = {
     getAll: () => fetchAPI(`${API_BASE_URL}/users`),
     
@@ -76,7 +76,29 @@ export const userAPI = {
     health: () => fetch(`${API_BASE_URL}/users/health`).then(r => r.text()),
 };
 
-// Test connection helper
+// order API
+export const orderAPI = {
+    getAll: () => fetchAPI(`${API_BASE_URL}/orders`),
+    
+    getById: (id) => fetchAPI(`${API_BASE_URL}/orders/${id}`),
+    
+    getByEmail: (email) => fetchAPI(`${API_BASE_URL}/orders/customer/${encodeURIComponent(email)}`),
+    
+    create: (orderData) => fetchAPI(`${API_BASE_URL}/orders`, {
+        method: 'POST',
+        body: JSON.stringify(orderData),
+    }),
+    
+    updateStatus: (id, status) => fetchAPI(`${API_BASE_URL}/orders/${id}/status?status=${status}`, {
+        method: 'PATCH',
+    }),
+    
+    delete: (id) => fetchAPI(`${API_BASE_URL}/orders/${id}`, {
+        method: 'DELETE',
+    }),
+};
+
+// health
 export const testConnection = async () => {
     try {
         const health = await userAPI.health();

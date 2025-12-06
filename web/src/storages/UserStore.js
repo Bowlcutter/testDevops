@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { userApi } from "../services/userApi";
+import { userAPI } from "../services/api";
 
 class UserStore {
     users = [];
@@ -14,7 +14,7 @@ class UserStore {
         this.loading = true;
         this.error = null;
         try {
-            const users = await userApi.getAllUsers();
+            const users = await userAPI.getAll();
             runInAction(() => {
                 this.users = users;
                 this.loading = false;
@@ -29,7 +29,7 @@ class UserStore {
 
     async addUser(name, email) {
         try {
-            const newUser = await userApi.createUser({ name, email });
+            const newUser = await userAPI.create({ name, email });
             runInAction(() => {
                 this.users.push(newUser);
             });
@@ -44,7 +44,7 @@ class UserStore {
 
     async updateUser(id, name, email) {
         try {
-            const updatedUser = await userApi.updateUser(id, { name, email });
+            const updatedUser = await userAPI.update(id, { name, email });
             runInAction(() => {
                 const index = this.users.findIndex(u => u.id === id);
                 if (index !== -1) {
@@ -62,7 +62,7 @@ class UserStore {
 
     async removeUser(id) {
         try {
-            await userApi.deleteUser(id);
+            await userAPI.delete(id);
             runInAction(() => {
                 this.users = this.users.filter(u => u.id !== id);
             });
